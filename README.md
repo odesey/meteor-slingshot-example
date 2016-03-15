@@ -5,7 +5,7 @@ Instructions on setting up an IAM user with correct S3 permissions for meteor-sl
 
 1. Navigate to IAM home https://console.aws.amazon.com/iam/home
 2. Navigate to Users -> Create New Users
-  a. Specify username
+  1. Specify username
   b. Make sure generate access key is checked
   c. Show user security credentials and add to settings.json as AWSAccessKeyId and AWSSecretAccessKey
 3. Navigate to Policies -> Create New Policy
