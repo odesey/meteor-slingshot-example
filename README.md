@@ -1,5 +1,7 @@
 # Meteor Slingshot Example
 
+# Sponsored by [Share911 - Get help, faster](https://share911.com/)
+
 ## Description
 
 This is a sample project that shows how to create an image uploader using Amazon S3, Meteor, and the [slingshot](https://github.com/CulturalMe/meteor-slingshot) package. Make sure to follow the AWS IAM Setup below before running the sample project.
