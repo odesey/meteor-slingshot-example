@@ -10,7 +10,7 @@ This is a sample project that shows how to create an image uploader using Amazon
 2. Navigate to Users -> Create New Users
   1. Specify username
   2. Make sure generate access key is checked
-  3. Show user security credentials and add to settings.json as AWSAccessKeyId and AWSSecretAccessKey
+  3. Show user security credentials and add to `settings.json` as `AWSAccessKeyId` and `AWSSecretAccessKey`
 3. Navigate to Policies -> Create New Policy
   1. Select “Create Your Own Policy”
   2. Give it a name, description
