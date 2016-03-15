@@ -1,0 +1,12 @@
+<template name="uploads">
+  <div class="row">
+    {{#each uploads}}
+      <div class="col-md-3">
+        <img src="{{url}}" class="img-responsive center-block"/>
+        {{#if isOwner}}
+          <button class="btn btn-danger btn-block delete-upload">Delete</button>
+        {{/if}}
+      </div>
+    {{/each}}
+  </div>
+</template>

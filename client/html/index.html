@@ -1,0 +1,25 @@
+<template name="index">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputFile">Upload Floor Plan</label>
+            <input type="file" id="floorPlanFileInput" accept=".gif,.jpg,.jpeg,.png">
+            <p class="help-block">png, jpg, or gif files.</p>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6">
+        {{#if uploading}}
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;">
+            <span class="sr-only">{{progress}}% Complete</span>
+          </div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    {{> uploads}}
+  </div>
+</template>
