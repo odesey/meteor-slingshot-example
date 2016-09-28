@@ -1,6 +1,7 @@
 
 
 Slingshot.createDirective("floorPlanUploader", Slingshot.S3Storage.TempCredentials, {
+  acl: "public-read",
   authorize: function() {
     if (!this.userId) {
       var message = "Please login before posting files";
@@ -20,11 +21,12 @@ Slingshot.createDirective("floorPlanUploader", Slingshot.S3Storage.TempCredentia
   }),
 
   key: function(file) {
-    var rand = Math.floor(Math.random() * 9000000) + 1000000;
-    var name = file.name;
-    var idx = name.lastIndexOf(".");
-    var noExtension = name.substring(0, idx);
-    var extension = name.substring(idx, name.length);
-    return "husd-" + noExtension + "-" + rand + extension;
+    // console.log(file)
+    // var rand = Math.floor(Math.random() * 9000000) + 1000000;
+    // var name = file.name;
+    // var idx = name.lastIndexOf(".");
+    // var noExtension = name.substring(0, idx);
+    // var extension = name.substring(idx, name.length);
+    return "Books/" + file.name;
   },
 });

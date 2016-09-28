@@ -2,7 +2,8 @@
   <div class="row">
     {{#each uploads}}
       <div class="col-md-3">
-        <img src="{{url}}" class="img-responsive center-block"/>
+        <!-- <img src="{{url}}" class="img-responsive center-block"/> -->
+        <p>{{url}}</p>
         {{#if isOwner}}
           <button class="btn btn-danger btn-block delete-upload">Delete</button>
         {{/if}}

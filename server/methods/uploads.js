@@ -9,10 +9,12 @@ Meteor.methods({
     if (!upload) {
       throw new Meteor.Error("missing-data", "Upload not found");
     }
+
+    const _key = 'Books/' + upload.key
     // Delete from s3
     var resp = S3.deleteObjectSync({
       Bucket: Meteor.settings.S3Bucket,
-      Key: upload.key,
+      Key: _key,
     });
 
     // Delete from collection
