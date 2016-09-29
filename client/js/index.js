@@ -1,17 +1,55 @@
-var dataURItoBlob;
+var convertURIToImageData = function(URI) {
+  return new Promise(function(resolve, reject) {
+    if (URI == null) return reject();
+    var canvas = document.createElement('canvas'),
+        context = canvas.getContext('2d'),
+        image = new Image();
+    image.addEventListener('load', function() {
+      canvas.width = image.width;
+      canvas.height = image.height;
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      resolve(context.getImageData(0, 0, canvas.width, canvas.height));
+    }, false);
+    image.src = URI;
+  });
+}
 
-dataURItoBlob = function(dataURI) {
+var dataUriToFile = function(dataUri, fileName) {
+  // https://en.wikipedia.org/wiki/Data_URI_scheme
+  // create a pattern to match the data uri
+  var patt = /^data:([^\/]+\/[^;]+)?(;charset=([^;]+))?(;base64)?,/i,
+    matches = dataUri.match(patt);
+  if (matches == null){
+    throw new Error("data: uri did not match scheme")
+  }
+  var 
+    prefix = matches[0],
+    contentType = matches[1],
+    // var charset = matches[3]; -- not used.
+    isBase64 = matches[4] != null,
+    // remove the prefix
+    encodedBytes = dataUri.slice(prefix.length),
+    // decode the bytes
+    decodedBytes = isBase64 ? atob(encodedBytes) : encodedBytes,
+    // return the file object
+    props = {};
+  if (contentType) {
+    props.type = contentType;
+  }
+  return new File([decodedBytes], fileName, props);
+}
+
+var dataURItoBlob = function(dataURI) {
   console.log(dataURI)
-  const _dataURI = dataURI._result;
-  console.log(_dataURI)
+
   var byteString, i, ia, mimeString;
   byteString = void 0;
-  if (_dataURI.split(',')[0].indexOf('base64') >= 0) {
-    byteString = atob(_dataURI.split(',')[1]);
+  if (dataURI.split(',')[0].indexOf('base64') >= 0) {
+    byteString = atob(dataURI.split(',')[1]);
   } else {
-    byteString = unescape(_dataURI.split(',')[1]);
+    byteString = unescape(dataURI.split(',')[1]);
   }
-  mimeString = _dataURI.split(',')[0].split(':')[1].split(';')[0];
+  mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
   ia = new Uint8Array(byteString.length);
   i = 0;
   while (i < byteString.length) {
@@ -71,32 +109,32 @@ Template.index.events({
         console.log(url)
         const book = ePub(url);
         console.log(book.getMetadata())
-        const cover = book.coverUrl().then(dataURItoBlob(this), failCallbacks)
+        const cover = book.coverUrl();
         console.log(cover)
-        // const blob = dataURItoBlob(cover)
 
-          imageUpload.send(blob, function(err, data) {
-            if (err) {
-              console.log("Error uploading", err);
-            }
-            else {
-              console.log(data)
-            }
-          })
+        cover.then(function () {
+          console.log('cover loaded')
+          console.log(cover)
+          // Cloudinary._upload_file("base64", {}, callback)
 
-        // toDataUrl(cover._result, function(base64Img) {
-        //   console.log(base64Img);
+          toDataUrl(cover._result, function(base64Img) {
 
-        //   imageUpload.send(base64Img, function(err, data) {
-        //     if (err) {
-        //       console.log("Error uploading", err);
-        //     }
-        //     else {
-        //       console.log(data)
-        //     }
-        //   })
-        // });
+            Cloudinary._upload_file( base64Img,{
+              folder: 'Books',
+              quality: 'jpegmini',
+              // resource_type: 'raw',
+              // data: "image/jpeg;base64..."
+            },function(err, res){ 
+              if (err){ 
+                console.log(err); 
+              } else { 
+                console.log(res);
+                 } 
+               });
+          });
 
+
+        })
 
 
         Meteor.call("saveUpload", url);

@@ -34,4 +34,18 @@ Meteor.methods({
       key: split[split.length - 1],
     });
   },
+  cloudsave() {
+    Cloudinary.upload( "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",{
+      folder: 'Books',
+      // quality: 'jpegmini',
+      // resource_type: 'raw',
+      // data: "image/jpeg;base64..."
+    },function(err, res){ 
+      if (err){ 
+        console.log(err); 
+      } else { 
+        console.log(res);
+         } 
+       });
+  }
 });
